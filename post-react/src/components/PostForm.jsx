@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 
-const PostForm = ({ initialData = {}, onSubmit, submitting = false, onClose, user = [] }) =>{
-    const [form, setForm] = useState(() => ({
+const PostForm = ({ initialData = {}, onSubmit, submitting = false, onClose, user = [] }) => {
+  const [form, setForm] = useState(() => ({
     title: '',
     body: '',
-    userId:'',
+    userId: '',
     ...initialData
   }))
   const isEditing = !!initialData?.id
@@ -46,7 +46,7 @@ const PostForm = ({ initialData = {}, onSubmit, submitting = false, onClose, use
       <div className="w-full max-w-2xl rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200">
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-medium text-slate-900">
-            {isEditing ? 'Editar producto' : 'Nuevo producto'}
+            {isEditing ? 'Editar Post' : 'Nuevo Post'}
           </h3>
           <button
             type="button"
@@ -59,24 +59,22 @@ const PostForm = ({ initialData = {}, onSubmit, submitting = false, onClose, use
         </div>
 
         <form className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2" onSubmit={handleSubmit}>
-          {/* Campo de título del post. */}
           <div className="sm:col-span-2">
             <label className="block text-sm font-medium text-slate-700">Título</label>
             <input
               name="title"
               value={form.title}
               onChange={handleChange}
-              placeholder="Nombre del Post"
+              placeholder="Título del post"
               className="mt-1 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-indigo-500 focus:bg-white"
               required
             />
           </div>
 
-          {/* Campo de descripción. */}
           <div className="sm:col-span-2">
             <label className="block text-sm font-medium text-slate-700">Contenido</label>
             <textarea
-              name="description"
+              name="body"
               value={form.body}
               onChange={handleChange}
               placeholder="Contenido del post"
@@ -84,24 +82,22 @@ const PostForm = ({ initialData = {}, onSubmit, submitting = false, onClose, use
               rows={3}
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700">Categoría</label>
+
+          <div className="sm:col-span-2">
+            <label className="block text-sm font-medium text-slate-700">Usuario</label>
             <select
-              name="user"
+              name="userId"
               value={form.userId}
               onChange={handleChange}
               className="mt-1 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-indigo-500 focus:bg-white"
               required
             >
               <option value="" disabled>
-                {user.length ? 'Selecciona una categoría' : 'Cargando categorías...'}
+                {user.length ? 'Selecciona un usuario' : 'Cargando usuarios...'}
               </option>
-              {form.userId && !categories.includes(form.userId) && (
-                <option value={form.userId}>{form.userId}</option>
-              )}
-              {categories.map((user) => (
-                <option key={user} value={user}>
-                  {user}
+              {user.map((u) => (
+                <option key={u.id} value={u.id}>
+                  {u.name}
                 </option>
               ))}
             </select>
@@ -116,13 +112,12 @@ const PostForm = ({ initialData = {}, onSubmit, submitting = false, onClose, use
               >
                 Cancelar
               </button>
-
               <button
                 type="submit"
                 disabled={submitting}
                 className="rounded-2xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-400"
               >
-                {submitting ? 'Guardando...' : isEditing ? 'Actualizar producto' : 'Guardar producto'}
+                {submitting ? 'Guardando...' : isEditing ? 'Actualizar Post' : 'Guardar Post'}
               </button>
             </div>
           </div>
